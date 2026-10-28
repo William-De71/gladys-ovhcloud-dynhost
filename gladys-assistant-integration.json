@@ -1,0 +1,1143 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "OVHcloud DynHost",
+  "description": {
+    "en": "Dynamic DNS for your OVHcloud domain: DynHost names follow your home’s public IP.",
+    "fr": "DNS dynamique pour votre domaine OVHcloud : vos DynHost suivent l’IP publique.",
+    "de": "Dynamisches DNS für deine OVHcloud-Domain: DynHost-Namen folgen der öffentlichen IP.",
+    "es": "DNS dinámico para tu dominio OVHcloud: los nombres DynHost siguen tu IP pública."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-ovhcloud-dynhost:0.1.0",
+  "gladys_version": ">=5.3.0",
+  "categories": ["network", "servers"],
+  "keywords": [
+    "ovh",
+    "ovhcloud",
+    "dynhost",
+    "dyndns",
+    "ddns",
+    "dynamic dns",
+    "dns dynamique",
+    "public ip",
+    "ip publique",
+    "domain"
+  ],
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-ovhcloud-dynhost/main/cover.jpg",
+  "transports": ["cloud"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "OVHcloud DynHost",
+        "fr": "OVHcloud DynHost",
+        "de": "OVHcloud DynHost",
+        "es": "OVHcloud DynHost"
+      },
+      "description": {
+        "en": "DynHost keeps a name of your OVHcloud domain (home.example.com) pointed at the public address of your home, even when your internet provider changes it. In the OVHcloud Control Panel, open your domain → DynHost: create an identifier (\"Manage access\"), then a DynHost record for the name. Enter the name, the identifier and its password below and press \"Test the connection\". The password stays in Gladys and only goes to OVHcloud. Not affiliated with OVHcloud.",
+        "fr": "DynHost garde un nom de votre domaine OVHcloud (maison.exemple.fr) pointé vers l’adresse publique de votre maison, même quand votre fournisseur d’accès la change. Dans l’espace client OVHcloud, ouvrez votre domaine → DynHost : créez un identifiant (« Gérer les accès »), puis un DynHost pour le nom. Saisissez ci-dessous le nom, l’identifiant et son mot de passe, puis appuyez sur « Tester la connexion ». Le mot de passe reste dans Gladys et ne part que vers OVHcloud. Sans lien avec OVHcloud.",
+        "de": "DynHost hält einen Namen deiner OVHcloud-Domain (zuhause.beispiel.de) auf die öffentliche Adresse deines Zuhauses gerichtet, auch wenn dein Internetanbieter sie ändert. Öffne im OVHcloud-Kundencenter deine Domain → DynHost: Erstelle eine Kennung („Zugänge verwalten“), dann einen DynHost-Eintrag für den Namen. Gib unten den Namen, die Kennung und ihr Passwort ein und drücke „Verbindung testen“. Das Passwort bleibt in Gladys und geht nur an OVHcloud. Nicht mit OVHcloud verbunden.",
+        "es": "DynHost mantiene un nombre de tu dominio OVHcloud (casa.ejemplo.es) apuntando a la dirección pública de tu casa, aunque tu proveedor de internet la cambie. En el área de cliente de OVHcloud, abre tu dominio → DynHost: crea un identificador («Gestionar los accesos») y luego un registro DynHost para el nombre. Introduce abajo el nombre, el identificador y su contraseña y pulsa «Probar la conexión». La contraseña se queda en Gladys y solo va a OVHcloud. Sin relación con OVHcloud."
+      },
+      "links": [
+        {
+          "url": "https://docs.ovhcloud.com/fr/guides/web-cloud/domains/dns-dynhost",
+          "label": {
+            "en": "OVHcloud DynHost guide",
+            "fr": "Guide DynHost d’OVHcloud",
+            "de": "DynHost-Anleitung von OVHcloud",
+            "es": "Guía DynHost de OVHcloud"
+          }
+        },
+        {
+          "url": "https://www.ovh.com/manager/#/web/domain",
+          "label": {
+            "en": "OVHcloud Control Panel",
+            "fr": "Espace client OVHcloud",
+            "de": "OVHcloud-Kundencenter",
+            "es": "Área de cliente de OVHcloud"
+          }
+        }
+      ]
+    },
+    {
+      "key": "host_1_section",
+      "type": "section",
+      "label": {
+        "en": "First name",
+        "fr": "Premier nom",
+        "de": "Erster Name",
+        "es": "Primer nombre"
+      }
+    },
+    {
+      "key": "hostname_1",
+      "type": "string",
+      "label": {
+        "en": "DynHost name",
+        "fr": "Nom DynHost",
+        "de": "DynHost-Name",
+        "es": "Nombre DynHost"
+      },
+      "description": {
+        "en": "The full name, as in the DynHost tab: home.example.com, or example.com for the domain itself.",
+        "fr": "Le nom complet, comme dans l’onglet DynHost : maison.exemple.fr, ou exemple.fr pour le domaine lui-même.",
+        "de": "Der vollständige Name wie im Tab DynHost: zuhause.beispiel.de, oder beispiel.de für die Domain selbst.",
+        "es": "El nombre completo, como en la pestaña DynHost: casa.ejemplo.es, o ejemplo.es para el propio dominio."
+      },
+      "placeholder": {
+        "en": "home.example.com",
+        "fr": "maison.exemple.fr",
+        "de": "zuhause.beispiel.de",
+        "es": "casa.ejemplo.es"
+      },
+      "required": true
+    },
+    {
+      "key": "login_1",
+      "type": "string",
+      "label": {
+        "en": "DynHost identifier",
+        "fr": "Identifiant DynHost",
+        "de": "DynHost-Kennung",
+        "es": "Identificador DynHost"
+      },
+      "description": {
+        "en": "The identifier of \"Manage access\": the domain, a hyphen and the suffix you chose (example.com-home).",
+        "fr": "L’identifiant de « Gérer les accès » : le domaine, un tiret et le suffixe choisi (exemple.fr-maison).",
+        "de": "Die Kennung aus „Zugänge verwalten“: die Domain, ein Bindestrich und das gewählte Suffix (beispiel.de-zuhause).",
+        "es": "El identificador de «Gestionar los accesos»: el dominio, un guion y el sufijo elegido (ejemplo.es-casa)."
+      },
+      "placeholder": {
+        "en": "example.com-home",
+        "fr": "exemple.fr-maison",
+        "de": "beispiel.de-zuhause",
+        "es": "ejemplo.es-casa"
+      },
+      "required": true
+    },
+    {
+      "key": "password_1",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "description": {
+        "en": "The password of this DynHost identifier (not the one of your OVHcloud account).",
+        "fr": "Le mot de passe de cet identifiant DynHost (pas celui de votre compte OVHcloud).",
+        "de": "Das Passwort dieser DynHost-Kennung (nicht das deines OVHcloud-Kontos).",
+        "es": "La contraseña de este identificador DynHost (no la de tu cuenta OVHcloud)."
+      },
+      "required": true
+    },
+    {
+      "key": "records_1",
+      "type": "select",
+      "label": {
+        "en": "Records to update",
+        "fr": "Enregistrements à mettre à jour",
+        "de": "Zu aktualisierende Einträge",
+        "es": "Registros que actualizar"
+      },
+      "description": {
+        "en": "IPv6 needs a DynHost record of type AAAA for the name, and an IPv6 connection reaching the container.",
+        "fr": "L’IPv6 demande un DynHost de type AAAA pour le nom, et une connexion IPv6 jusqu’au conteneur.",
+        "de": "IPv6 braucht einen DynHost-Eintrag vom Typ AAAA für den Namen und eine IPv6-Verbindung bis zum Container.",
+        "es": "El IPv6 necesita un registro DynHost de tipo AAAA para el nombre y una conexión IPv6 hasta el contenedor."
+      },
+      "options": [
+        {
+          "value": "ipv4",
+          "label": {
+            "en": "IPv4 (A)",
+            "fr": "IPv4 (A)",
+            "de": "IPv4 (A)",
+            "es": "IPv4 (A)"
+          }
+        },
+        {
+          "value": "ipv6",
+          "label": {
+            "en": "IPv6 (AAAA)",
+            "fr": "IPv6 (AAAA)",
+            "de": "IPv6 (AAAA)",
+            "es": "IPv6 (AAAA)"
+          }
+        },
+        {
+          "value": "both",
+          "label": {
+            "en": "IPv4 and IPv6 (A and AAAA)",
+            "fr": "IPv4 et IPv6 (A et AAAA)",
+            "de": "IPv4 und IPv6 (A und AAAA)",
+            "es": "IPv4 e IPv6 (A y AAAA)"
+          }
+        }
+      ],
+      "default": "ipv4",
+      "required": false
+    },
+    {
+      "key": "host_2_section",
+      "type": "section",
+      "label": {
+        "en": "Second name (optional)",
+        "fr": "Deuxième nom (facultatif)",
+        "de": "Zweiter Name (optional)",
+        "es": "Segundo nombre (opcional)"
+      },
+      "description": {
+        "en": "Leave the identifier and the password empty to use those of the first name: an identifier created with the sub-domain * covers every name of the domain.",
+        "fr": "Laissez l’identifiant et le mot de passe vides pour reprendre ceux du premier nom : un identifiant créé avec le sous-domaine * couvre tous les noms du domaine.",
+        "de": "Lass Kennung und Passwort leer, um die des ersten Namens zu verwenden: Eine mit der Subdomain * erstellte Kennung deckt alle Namen der Domain ab.",
+        "es": "Deja vacíos el identificador y la contraseña para usar los del primer nombre: un identificador creado con el subdominio * cubre todos los nombres del dominio."
+      }
+    },
+    {
+      "key": "hostname_2",
+      "type": "string",
+      "label": {
+        "en": "DynHost name",
+        "fr": "Nom DynHost",
+        "de": "DynHost-Name",
+        "es": "Nombre DynHost"
+      },
+      "description": {
+        "en": "The full name, as in the DynHost tab: home.example.com, or example.com for the domain itself.",
+        "fr": "Le nom complet, comme dans l’onglet DynHost : maison.exemple.fr, ou exemple.fr pour le domaine lui-même.",
+        "de": "Der vollständige Name wie im Tab DynHost: zuhause.beispiel.de, oder beispiel.de für die Domain selbst.",
+        "es": "El nombre completo, como en la pestaña DynHost: casa.ejemplo.es, o ejemplo.es para el propio dominio."
+      },
+      "placeholder": {
+        "en": "home.example.com",
+        "fr": "maison.exemple.fr",
+        "de": "zuhause.beispiel.de",
+        "es": "casa.ejemplo.es"
+      },
+      "required": false
+    },
+    {
+      "key": "login_2",
+      "type": "string",
+      "label": {
+        "en": "DynHost identifier",
+        "fr": "Identifiant DynHost",
+        "de": "DynHost-Kennung",
+        "es": "Identificador DynHost"
+      },
+      "description": {
+        "en": "The identifier of \"Manage access\": the domain, a hyphen and the suffix you chose (example.com-home).",
+        "fr": "L’identifiant de « Gérer les accès » : le domaine, un tiret et le suffixe choisi (exemple.fr-maison).",
+        "de": "Die Kennung aus „Zugänge verwalten“: die Domain, ein Bindestrich und das gewählte Suffix (beispiel.de-zuhause).",
+        "es": "El identificador de «Gestionar los accesos»: el dominio, un guion y el sufijo elegido (ejemplo.es-casa)."
+      },
+      "placeholder": {
+        "en": "example.com-home",
+        "fr": "exemple.fr-maison",
+        "de": "beispiel.de-zuhause",
+        "es": "ejemplo.es-casa"
+      },
+      "required": false
+    },
+    {
+      "key": "password_2",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "description": {
+        "en": "The password of this DynHost identifier (not the one of your OVHcloud account).",
+        "fr": "Le mot de passe de cet identifiant DynHost (pas celui de votre compte OVHcloud).",
+        "de": "Das Passwort dieser DynHost-Kennung (nicht das deines OVHcloud-Kontos).",
+        "es": "La contraseña de este identificador DynHost (no la de tu cuenta OVHcloud)."
+      },
+      "required": false
+    },
+    {
+      "key": "records_2",
+      "type": "select",
+      "label": {
+        "en": "Records to update",
+        "fr": "Enregistrements à mettre à jour",
+        "de": "Zu aktualisierende Einträge",
+        "es": "Registros que actualizar"
+      },
+      "description": {
+        "en": "IPv6 needs a DynHost record of type AAAA for the name, and an IPv6 connection reaching the container.",
+        "fr": "L’IPv6 demande un DynHost de type AAAA pour le nom, et une connexion IPv6 jusqu’au conteneur.",
+        "de": "IPv6 braucht einen DynHost-Eintrag vom Typ AAAA für den Namen und eine IPv6-Verbindung bis zum Container.",
+        "es": "El IPv6 necesita un registro DynHost de tipo AAAA para el nombre y una conexión IPv6 hasta el contenedor."
+      },
+      "options": [
+        {
+          "value": "ipv4",
+          "label": {
+            "en": "IPv4 (A)",
+            "fr": "IPv4 (A)",
+            "de": "IPv4 (A)",
+            "es": "IPv4 (A)"
+          }
+        },
+        {
+          "value": "ipv6",
+          "label": {
+            "en": "IPv6 (AAAA)",
+            "fr": "IPv6 (AAAA)",
+            "de": "IPv6 (AAAA)",
+            "es": "IPv6 (AAAA)"
+          }
+        },
+        {
+          "value": "both",
+          "label": {
+            "en": "IPv4 and IPv6 (A and AAAA)",
+            "fr": "IPv4 et IPv6 (A et AAAA)",
+            "de": "IPv4 und IPv6 (A und AAAA)",
+            "es": "IPv4 e IPv6 (A y AAAA)"
+          }
+        }
+      ],
+      "default": "ipv4",
+      "required": false
+    },
+    {
+      "key": "host_3_section",
+      "type": "section",
+      "label": {
+        "en": "Third name (optional)",
+        "fr": "Troisième nom (facultatif)",
+        "de": "Dritter Name (optional)",
+        "es": "Tercer nombre (opcional)"
+      }
+    },
+    {
+      "key": "hostname_3",
+      "type": "string",
+      "label": {
+        "en": "DynHost name",
+        "fr": "Nom DynHost",
+        "de": "DynHost-Name",
+        "es": "Nombre DynHost"
+      },
+      "description": {
+        "en": "The full name, as in the DynHost tab: home.example.com, or example.com for the domain itself.",
+        "fr": "Le nom complet, comme dans l’onglet DynHost : maison.exemple.fr, ou exemple.fr pour le domaine lui-même.",
+        "de": "Der vollständige Name wie im Tab DynHost: zuhause.beispiel.de, oder beispiel.de für die Domain selbst.",
+        "es": "El nombre completo, como en la pestaña DynHost: casa.ejemplo.es, o ejemplo.es para el propio dominio."
+      },
+      "placeholder": {
+        "en": "home.example.com",
+        "fr": "maison.exemple.fr",
+        "de": "zuhause.beispiel.de",
+        "es": "casa.ejemplo.es"
+      },
+      "required": false
+    },
+    {
+      "key": "login_3",
+      "type": "string",
+      "label": {
+        "en": "DynHost identifier",
+        "fr": "Identifiant DynHost",
+        "de": "DynHost-Kennung",
+        "es": "Identificador DynHost"
+      },
+      "description": {
+        "en": "The identifier of \"Manage access\": the domain, a hyphen and the suffix you chose (example.com-home).",
+        "fr": "L’identifiant de « Gérer les accès » : le domaine, un tiret et le suffixe choisi (exemple.fr-maison).",
+        "de": "Die Kennung aus „Zugänge verwalten“: die Domain, ein Bindestrich und das gewählte Suffix (beispiel.de-zuhause).",
+        "es": "El identificador de «Gestionar los accesos»: el dominio, un guion y el sufijo elegido (ejemplo.es-casa)."
+      },
+      "placeholder": {
+        "en": "example.com-home",
+        "fr": "exemple.fr-maison",
+        "de": "beispiel.de-zuhause",
+        "es": "ejemplo.es-casa"
+      },
+      "required": false
+    },
+    {
+      "key": "password_3",
+      "type": "secret",
+      "label": {
+        "en": "Password",
+        "fr": "Mot de passe",
+        "de": "Passwort",
+        "es": "Contraseña"
+      },
+      "description": {
+        "en": "The password of this DynHost identifier (not the one of your OVHcloud account).",
+        "fr": "Le mot de passe de cet identifiant DynHost (pas celui de votre compte OVHcloud).",
+        "de": "Das Passwort dieser DynHost-Kennung (nicht das deines OVHcloud-Kontos).",
+        "es": "La contraseña de este identificador DynHost (no la de tu cuenta OVHcloud)."
+      },
+      "required": false
+    },
+    {
+      "key": "records_3",
+      "type": "select",
+      "label": {
+        "en": "Records to update",
+        "fr": "Enregistrements à mettre à jour",
+        "de": "Zu aktualisierende Einträge",
+        "es": "Registros que actualizar"
+      },
+      "description": {
+        "en": "IPv6 needs a DynHost record of type AAAA for the name, and an IPv6 connection reaching the container.",
+        "fr": "L’IPv6 demande un DynHost de type AAAA pour le nom, et une connexion IPv6 jusqu’au conteneur.",
+        "de": "IPv6 braucht einen DynHost-Eintrag vom Typ AAAA für den Namen und eine IPv6-Verbindung bis zum Container.",
+        "es": "El IPv6 necesita un registro DynHost de tipo AAAA para el nombre y una conexión IPv6 hasta el contenedor."
+      },
+      "options": [
+        {
+          "value": "ipv4",
+          "label": {
+            "en": "IPv4 (A)",
+            "fr": "IPv4 (A)",
+            "de": "IPv4 (A)",
+            "es": "IPv4 (A)"
+          }
+        },
+        {
+          "value": "ipv6",
+          "label": {
+            "en": "IPv6 (AAAA)",
+            "fr": "IPv6 (AAAA)",
+            "de": "IPv6 (AAAA)",
+            "es": "IPv6 (AAAA)"
+          }
+        },
+        {
+          "value": "both",
+          "label": {
+            "en": "IPv4 and IPv6 (A and AAAA)",
+            "fr": "IPv4 et IPv6 (A et AAAA)",
+            "de": "IPv4 und IPv6 (A und AAAA)",
+            "es": "IPv4 e IPv6 (A y AAAA)"
+          }
+        }
+      ],
+      "default": "ipv4",
+      "required": false
+    },
+    {
+      "key": "options_section",
+      "type": "section",
+      "label": {
+        "en": "Options",
+        "fr": "Options",
+        "de": "Optionen",
+        "es": "Opciones"
+      }
+    },
+    {
+      "key": "interval",
+      "type": "select",
+      "label": {
+        "en": "Check of the public address",
+        "fr": "Vérification de l’adresse publique",
+        "de": "Prüfung der öffentlichen Adresse",
+        "es": "Comprobación de la dirección pública"
+      },
+      "description": {
+        "en": "How often the public address is read. OVHcloud is only called when a record must change.",
+        "fr": "La fréquence de lecture de l’adresse publique. OVHcloud n’est appelé que si un enregistrement doit changer.",
+        "de": "Wie oft die öffentliche Adresse gelesen wird. OVHcloud wird nur aufgerufen, wenn sich ein Eintrag ändern muss.",
+        "es": "Cada cuánto se lee la dirección pública. Solo se llama a OVHcloud cuando un registro debe cambiar."
+      },
+      "options": [
+        {
+          "value": "60",
+          "label": {
+            "en": "Every minute",
+            "fr": "Toutes les minutes",
+            "de": "Jede Minute",
+            "es": "Cada minuto"
+          }
+        },
+        {
+          "value": "300",
+          "label": {
+            "en": "Every 5 minutes",
+            "fr": "Toutes les 5 minutes",
+            "de": "Alle 5 Minuten",
+            "es": "Cada 5 minutos"
+          }
+        },
+        {
+          "value": "900",
+          "label": {
+            "en": "Every 15 minutes",
+            "fr": "Toutes les 15 minutes",
+            "de": "Alle 15 Minuten",
+            "es": "Cada 15 minutos"
+          }
+        },
+        {
+          "value": "1800",
+          "label": {
+            "en": "Every 30 minutes",
+            "fr": "Toutes les 30 minutes",
+            "de": "Alle 30 Minuten",
+            "es": "Cada 30 minutos"
+          }
+        }
+      ],
+      "default": "300",
+      "required": false
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the texts",
+        "fr": "Langue des textes",
+        "de": "Sprache der Texte",
+        "es": "Idioma de los textos"
+      },
+      "description": {
+        "en": "Language of the device names, of the status and of the scene summaries. Automatic follows the language of your dashboard.",
+        "fr": "Langue des noms d’appareils, de l’état et des résumés de scène. Automatique suit la langue de votre tableau de bord.",
+        "de": "Sprache der Gerätenamen, des Status und der Szenen-Zusammenfassungen. Automatisch folgt der Sprache deines Dashboards.",
+        "es": "Idioma de los nombres de dispositivos, del estado y de los resúmenes de escena. Automático sigue el idioma de tu panel."
+      },
+      "options": [
+        {
+          "value": "auto",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "de": "Automatisch",
+            "es": "Automático"
+          }
+        },
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ],
+      "default": "auto",
+      "required": false
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Reads the public address and sends every record to OVHcloud now: an answer \"already right\" proves the identifier works.",
+        "fr": "Lit l’adresse publique et envoie tout de suite chaque enregistrement à OVHcloud : une réponse « déjà à jour » prouve que l’identifiant fonctionne.",
+        "de": "Liest die öffentliche Adresse und sendet sofort jeden Eintrag an OVHcloud: Die Antwort „schon aktuell“ beweist, dass die Kennung funktioniert.",
+        "es": "Lee la dirección pública y envía ahora cada registro a OVHcloud: una respuesta «ya al día» demuestra que el identificador funciona."
+      },
+      "timeout_seconds": 60
+    },
+    {
+      "key": "diagnostic",
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes what the integration knows in its logs (passwords hidden), to attach to an issue.",
+        "fr": "Écrit ce que sait l’intégration dans ses journaux (mots de passe masqués), à joindre à un ticket.",
+        "de": "Schreibt, was die Integration weiß, in ihre Protokolle (Passwörter verborgen), für ein Ticket.",
+        "es": "Escribe lo que sabe la integración en sus registros (contraseñas ocultas), para adjuntarlo a una incidencia."
+      },
+      "timeout_seconds": 15
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "public_ip_changed",
+      "label": {
+        "en": "DynHost: public address changed",
+        "fr": "DynHost : adresse publique changée",
+        "de": "DynHost: öffentliche Adresse geändert",
+        "es": "DynHost: dirección pública cambiada"
+      },
+      "description": {
+        "en": "The public address of the home changed (seen at the next check).",
+        "fr": "L’adresse publique de la maison a changé (vu à la vérification suivante).",
+        "de": "Die öffentliche Adresse des Zuhauses hat sich geändert (bei der nächsten Prüfung erkannt).",
+        "es": "La dirección pública de la casa cambió (visto en la siguiente comprobación)."
+      },
+      "fields": [
+        {
+          "key": "family",
+          "type": "select",
+          "label": {
+            "en": "Address type",
+            "fr": "Type d’adresse",
+            "de": "Adresstyp",
+            "es": "Tipo de dirección"
+          },
+          "description": {
+            "en": "Leave empty for IPv4 and IPv6.",
+            "fr": "Laissez vide pour IPv4 et IPv6.",
+            "de": "Leer lassen für IPv4 und IPv6.",
+            "es": "Déjalo vacío para IPv4 e IPv6."
+          },
+          "options": [
+            {
+              "value": "ipv4",
+              "label": {
+                "en": "IPv4",
+                "fr": "IPv4",
+                "de": "IPv4",
+                "es": "IPv4"
+              }
+            },
+            {
+              "value": "ipv6",
+              "label": {
+                "en": "IPv6",
+                "fr": "IPv6",
+                "de": "IPv6",
+                "es": "IPv6"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "family",
+          "type": "string",
+          "label": {
+            "en": "Address type (ipv4, ipv6)",
+            "fr": "Type d’adresse (ipv4, ipv6)",
+            "de": "Adresstyp (ipv4, ipv6)",
+            "es": "Tipo de dirección (ipv4, ipv6)"
+          }
+        },
+        {
+          "key": "previous_ip",
+          "type": "string",
+          "label": {
+            "en": "Former address",
+            "fr": "Ancienne adresse",
+            "de": "Vorherige Adresse",
+            "es": "Dirección anterior"
+          }
+        },
+        {
+          "key": "ip",
+          "type": "string",
+          "label": {
+            "en": "New address",
+            "fr": "Nouvelle adresse",
+            "de": "Neue Adresse",
+            "es": "Nueva dirección"
+          }
+        }
+      ]
+    },
+    {
+      "key": "record_updated",
+      "label": {
+        "en": "DynHost: record updated",
+        "fr": "DynHost : enregistrement mis à jour",
+        "de": "DynHost: Eintrag aktualisiert",
+        "es": "DynHost: registro actualizado"
+      },
+      "description": {
+        "en": "OVHcloud pointed a DynHost name at a new address.",
+        "fr": "OVHcloud a pointé un nom DynHost vers une nouvelle adresse.",
+        "de": "OVHcloud hat einen DynHost-Namen auf eine neue Adresse gerichtet.",
+        "es": "OVHcloud apuntó un nombre DynHost a una nueva dirección."
+      },
+      "fields": [
+        {
+          "key": "host",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "DynHost name",
+            "fr": "Nom DynHost",
+            "de": "DynHost-Name",
+            "es": "Nombre DynHost"
+          },
+          "description": {
+            "en": "A DynHost device of the integration. Leave empty for any name.",
+            "fr": "Un appareil DynHost de l’intégration. Laissez vide pour n’importe quel nom.",
+            "de": "Ein DynHost-Gerät der Integration. Leer lassen für jeden Namen.",
+            "es": "Un dispositivo DynHost de la integración. Déjalo vacío para cualquier nombre."
+          },
+          "required": false
+        },
+        {
+          "key": "family",
+          "type": "select",
+          "label": {
+            "en": "Address type",
+            "fr": "Type d’adresse",
+            "de": "Adresstyp",
+            "es": "Tipo de dirección"
+          },
+          "description": {
+            "en": "Leave empty for IPv4 and IPv6.",
+            "fr": "Laissez vide pour IPv4 et IPv6.",
+            "de": "Leer lassen für IPv4 und IPv6.",
+            "es": "Déjalo vacío para IPv4 e IPv6."
+          },
+          "options": [
+            {
+              "value": "ipv4",
+              "label": {
+                "en": "IPv4",
+                "fr": "IPv4",
+                "de": "IPv4",
+                "es": "IPv4"
+              }
+            },
+            {
+              "value": "ipv6",
+              "label": {
+                "en": "IPv6",
+                "fr": "IPv6",
+                "de": "IPv6",
+                "es": "IPv6"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "hostname",
+          "type": "string",
+          "label": {
+            "en": "DynHost name",
+            "fr": "Nom DynHost",
+            "de": "DynHost-Name",
+            "es": "Nombre DynHost"
+          }
+        },
+        {
+          "key": "family",
+          "type": "string",
+          "label": {
+            "en": "Address type (ipv4, ipv6)",
+            "fr": "Type d’adresse (ipv4, ipv6)",
+            "de": "Adresstyp (ipv4, ipv6)",
+            "es": "Tipo de dirección (ipv4, ipv6)"
+          }
+        },
+        {
+          "key": "ip",
+          "type": "string",
+          "label": {
+            "en": "New address",
+            "fr": "Nouvelle adresse",
+            "de": "Neue Adresse",
+            "es": "Nueva dirección"
+          }
+        },
+        {
+          "key": "previous_ip",
+          "type": "string",
+          "label": {
+            "en": "Former address",
+            "fr": "Ancienne adresse",
+            "de": "Vorherige Adresse",
+            "es": "Dirección anterior"
+          }
+        }
+      ]
+    },
+    {
+      "key": "update_failed",
+      "label": {
+        "en": "DynHost: update failed",
+        "fr": "DynHost : échec de mise à jour",
+        "de": "DynHost: Aktualisierung fehlgeschlagen",
+        "es": "DynHost: fallo de actualización"
+      },
+      "description": {
+        "en": "A record could not be updated: once per error, not at every check.",
+        "fr": "Un enregistrement n’a pas pu être mis à jour : une fois par erreur, pas à chaque vérification.",
+        "de": "Ein Eintrag konnte nicht aktualisiert werden: einmal pro Fehler, nicht bei jeder Prüfung.",
+        "es": "Un registro no se pudo actualizar: una vez por error, no en cada comprobación."
+      },
+      "fields": [
+        {
+          "key": "host",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "DynHost name",
+            "fr": "Nom DynHost",
+            "de": "DynHost-Name",
+            "es": "Nombre DynHost"
+          },
+          "description": {
+            "en": "A DynHost device of the integration. Leave empty for any name.",
+            "fr": "Un appareil DynHost de l’intégration. Laissez vide pour n’importe quel nom.",
+            "de": "Ein DynHost-Gerät der Integration. Leer lassen für jeden Namen.",
+            "es": "Un dispositivo DynHost de la integración. Déjalo vacío para cualquier nombre."
+          },
+          "required": false
+        },
+        {
+          "key": "error",
+          "type": "select",
+          "label": {
+            "en": "Error",
+            "fr": "Erreur",
+            "de": "Fehler",
+            "es": "Error"
+          },
+          "description": {
+            "en": "Leave empty for any error.",
+            "fr": "Laissez vide pour toutes les erreurs.",
+            "de": "Leer lassen für jeden Fehler.",
+            "es": "Déjalo vacío para cualquier error."
+          },
+          "options": [
+            {
+              "value": "auth",
+              "label": {
+                "en": "Identifier or password refused",
+                "fr": "Identifiant ou mot de passe refusé",
+                "de": "Kennung oder Passwort abgelehnt",
+                "es": "Identificador o contraseña rechazados"
+              }
+            },
+            {
+              "value": "nohost",
+              "label": {
+                "en": "No DynHost record for the name",
+                "fr": "Aucun DynHost pour le nom",
+                "de": "Kein DynHost-Eintrag für den Namen",
+                "es": "Ningún registro DynHost para el nombre"
+              }
+            },
+            {
+              "value": "notfqdn",
+              "label": {
+                "en": "Not a full domain name",
+                "fr": "Nom de domaine incomplet",
+                "de": "Kein vollständiger Domainname",
+                "es": "Nombre de dominio incompleto"
+              }
+            },
+            {
+              "value": "abuse",
+              "label": {
+                "en": "Blocked for too many updates",
+                "fr": "Bloqué pour trop de mises à jour",
+                "de": "Wegen zu vieler Updates gesperrt",
+                "es": "Bloqueado por demasiadas actualizaciones"
+              }
+            },
+            {
+              "value": "badagent",
+              "label": {
+                "en": "Client refused",
+                "fr": "Client refusé",
+                "de": "Client abgelehnt",
+                "es": "Cliente rechazado"
+              }
+            },
+            {
+              "value": "server",
+              "label": {
+                "en": "OVHcloud error",
+                "fr": "Erreur OVHcloud",
+                "de": "OVHcloud-Fehler",
+                "es": "Error de OVHcloud"
+              }
+            },
+            {
+              "value": "network",
+              "label": {
+                "en": "OVHcloud unreachable",
+                "fr": "OVHcloud injoignable",
+                "de": "OVHcloud nicht erreichbar",
+                "es": "OVHcloud inaccesible"
+              }
+            },
+            {
+              "value": "no_ip",
+              "label": {
+                "en": "Public address unknown",
+                "fr": "Adresse publique inconnue",
+                "de": "Öffentliche Adresse unbekannt",
+                "es": "Dirección pública desconocida"
+              }
+            }
+          ],
+          "required": false
+        }
+      ],
+      "variables": [
+        {
+          "key": "hostname",
+          "type": "string",
+          "label": {
+            "en": "DynHost name",
+            "fr": "Nom DynHost",
+            "de": "DynHost-Name",
+            "es": "Nombre DynHost"
+          }
+        },
+        {
+          "key": "family",
+          "type": "string",
+          "label": {
+            "en": "Address type (ipv4, ipv6)",
+            "fr": "Type d’adresse (ipv4, ipv6)",
+            "de": "Adresstyp (ipv4, ipv6)",
+            "es": "Tipo de dirección (ipv4, ipv6)"
+          }
+        },
+        {
+          "key": "ip",
+          "type": "string",
+          "label": {
+            "en": "Address sent",
+            "fr": "Adresse envoyée",
+            "de": "Gesendete Adresse",
+            "es": "Dirección enviada"
+          }
+        },
+        {
+          "key": "error",
+          "type": "string",
+          "label": {
+            "en": "Error code",
+            "fr": "Code d’erreur",
+            "de": "Fehlercode",
+            "es": "Código de error"
+          }
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "label": {
+            "en": "Error message",
+            "fr": "Message d’erreur",
+            "de": "Fehlermeldung",
+            "es": "Mensaje de error"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "update_now",
+      "label": {
+        "en": "DynHost: update now",
+        "fr": "DynHost : mettre à jour",
+        "de": "DynHost: jetzt aktualisieren",
+        "es": "DynHost: actualizar ahora"
+      },
+      "description": {
+        "en": "Checks the public address and updates the records that must change, without waiting for the next check.",
+        "fr": "Vérifie l’adresse publique et met à jour les enregistrements qui doivent changer, sans attendre la prochaine vérification.",
+        "de": "Prüft die öffentliche Adresse und aktualisiert die Einträge, die sich ändern müssen, ohne auf die nächste Prüfung zu warten.",
+        "es": "Comprueba la dirección pública y actualiza los registros que deben cambiar, sin esperar a la siguiente comprobación."
+      },
+      "timeout_seconds": 60,
+      "fields": [
+        {
+          "key": "host",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "DynHost name",
+            "fr": "Nom DynHost",
+            "de": "DynHost-Name",
+            "es": "Nombre DynHost"
+          },
+          "description": {
+            "en": "A DynHost device of the integration. Leave empty for every name.",
+            "fr": "Un appareil DynHost de l’intégration. Laissez vide pour tous les noms.",
+            "de": "Ein DynHost-Gerät der Integration. Leer lassen für alle Namen.",
+            "es": "Un dispositivo DynHost de la integración. Déjalo vacío para todos los nombres."
+          },
+          "required": false
+        },
+        {
+          "key": "force",
+          "type": "boolean",
+          "label": {
+            "en": "Send even if already right",
+            "fr": "Envoyer même si déjà à jour",
+            "de": "Auch senden, wenn schon aktuell",
+            "es": "Enviar aunque ya esté al día"
+          },
+          "description": {
+            "en": "Sends every record to OVHcloud (at most once a minute per record).",
+            "fr": "Envoie chaque enregistrement à OVHcloud (au plus une fois par minute et par enregistrement).",
+            "de": "Sendet jeden Eintrag an OVHcloud (höchstens einmal pro Minute und Eintrag).",
+            "es": "Envía cada registro a OVHcloud (como máximo una vez por minuto y registro)."
+          },
+          "default": false,
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "key": "updated",
+          "type": "number",
+          "label": {
+            "en": "Records updated",
+            "fr": "Enregistrements mis à jour",
+            "de": "Aktualisierte Einträge",
+            "es": "Registros actualizados"
+          }
+        },
+        {
+          "key": "unchanged",
+          "type": "number",
+          "label": {
+            "en": "Records already right",
+            "fr": "Enregistrements déjà à jour",
+            "de": "Schon aktuelle Einträge",
+            "es": "Registros ya al día"
+          }
+        },
+        {
+          "key": "failed",
+          "type": "number",
+          "label": {
+            "en": "Records failed",
+            "fr": "Enregistrements en échec",
+            "de": "Fehlgeschlagene Einträge",
+            "es": "Registros con error"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "get_public_ip",
+      "label": {
+        "en": "DynHost: read the public address",
+        "fr": "DynHost : lire l’adresse publique",
+        "de": "DynHost: öffentliche Adresse lesen",
+        "es": "DynHost: leer la dirección pública"
+      },
+      "description": {
+        "en": "Reads the public IPv4 and IPv6 addresses of the home now, to send them in a message.",
+        "fr": "Lit tout de suite les adresses publiques IPv4 et IPv6 de la maison, pour les envoyer dans un message.",
+        "de": "Liest sofort die öffentlichen IPv4- und IPv6-Adressen des Zuhauses, um sie in einer Nachricht zu senden.",
+        "es": "Lee ahora las direcciones públicas IPv4 e IPv6 de la casa, para enviarlas en un mensaje."
+      },
+      "timeout_seconds": 60,
+      "outputs": [
+        {
+          "key": "ipv4",
+          "type": "string",
+          "label": {
+            "en": "Public IPv4 (empty if none)",
+            "fr": "IPv4 publique (vide si aucune)",
+            "de": "Öffentliche IPv4 (leer, wenn keine)",
+            "es": "IPv4 pública (vacía si no hay)"
+          }
+        },
+        {
+          "key": "ipv6",
+          "type": "string",
+          "label": {
+            "en": "Public IPv6 (empty if none)",
+            "fr": "IPv6 publique (vide si aucune)",
+            "de": "Öffentliche IPv6 (leer, wenn keine)",
+            "es": "IPv6 pública (vacía si no hay)"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary",
+            "fr": "Résumé",
+            "de": "Zusammenfassung",
+            "es": "Resumen"
+          }
+        }
+      ]
+    }
+  ],
+  "widgets": [
+    {
+      "key": "status",
+      "label": {
+        "en": "DynHost",
+        "fr": "DynHost",
+        "de": "DynHost",
+        "es": "DynHost"
+      },
+      "description": {
+        "en": "The public address of the home and each DynHost record, with a button to update now.",
+        "fr": "L’adresse publique de la maison et chaque DynHost, avec un bouton de mise à jour.",
+        "de": "Die öffentliche Adresse und jeder DynHost-Eintrag, mit Knopf zum Aktualisieren.",
+        "es": "La dirección pública de la casa y cada DynHost, con un botón para actualizar."
+      },
+      "icon": "globe",
+      "action_timeout_seconds": 60
+    }
+  ]
+}

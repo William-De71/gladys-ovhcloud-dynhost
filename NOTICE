@@ -1,0 +1,14 @@
+Gladys OVHcloud DynHost integration
+Copyright 2026 William Deren
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The DynHost records are updated through the DynHost endpoint of OVHcloud
+(https://docs.ovhcloud.com/fr/guides/web-cloud/domains/dns-dynhost), with the
+DynHost identifier each user creates in the OVHcloud Control Panel. The public
+address of the home is read on the public echo services ipify
+(https://www.ipify.org), icanhazip (https://icanhazip.com) and ident.me
+(https://ident.me), which only see the address a request comes from.
+
+OVHcloud and DynHost are trademarks of OVH SAS. This community integration is
+not affiliated with, endorsed or sponsored by OVHcloud.

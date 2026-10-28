@@ -1,0 +1,372 @@
+{
+  "devices": {
+    "ipv4": {
+      "external_id": "ext:ovhcloud-dynhost:host:home.example.com",
+      "should_poll": false,
+      "params": ["DYNHOST_HOSTNAME"],
+      "features": [
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:ipv4",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:status",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:changes",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 10000000,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "ipv6": {
+      "external_id": "ext:ovhcloud-dynhost:host:home.example.com",
+      "should_poll": false,
+      "params": ["DYNHOST_HOSTNAME"],
+      "features": [
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:ipv6",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:status",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:changes",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 10000000,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    },
+    "both": {
+      "external_id": "ext:ovhcloud-dynhost:host:home.example.com",
+      "should_poll": false,
+      "params": ["DYNHOST_HOSTNAME"],
+      "features": [
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:ipv4",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:ipv6",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:status",
+          "category": "text",
+          "type": "text",
+          "min": 0,
+          "max": 0,
+          "read_only": true,
+          "has_feedback": false
+        },
+        {
+          "external_id": "ext:ovhcloud-dynhost:host:home.example.com:changes",
+          "category": "counter-sensor",
+          "type": "integer",
+          "min": 0,
+          "max": 10000000,
+          "read_only": true,
+          "has_feedback": false
+        }
+      ]
+    }
+  },
+  "manifest": {
+    "actions": ["test_connection", "diagnostic"],
+    "config_schema": [
+      {
+        "key": "intro",
+        "type": "section",
+        "options": []
+      },
+      {
+        "key": "host_1_section",
+        "type": "section",
+        "options": []
+      },
+      {
+        "key": "hostname_1",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "login_1",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "password_1",
+        "type": "secret",
+        "options": []
+      },
+      {
+        "key": "records_1",
+        "type": "select",
+        "options": ["ipv4", "ipv6", "both"]
+      },
+      {
+        "key": "host_2_section",
+        "type": "section",
+        "options": []
+      },
+      {
+        "key": "hostname_2",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "login_2",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "password_2",
+        "type": "secret",
+        "options": []
+      },
+      {
+        "key": "records_2",
+        "type": "select",
+        "options": ["ipv4", "ipv6", "both"]
+      },
+      {
+        "key": "host_3_section",
+        "type": "section",
+        "options": []
+      },
+      {
+        "key": "hostname_3",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "login_3",
+        "type": "string",
+        "options": []
+      },
+      {
+        "key": "password_3",
+        "type": "secret",
+        "options": []
+      },
+      {
+        "key": "records_3",
+        "type": "select",
+        "options": ["ipv4", "ipv6", "both"]
+      },
+      {
+        "key": "options_section",
+        "type": "section",
+        "options": []
+      },
+      {
+        "key": "interval",
+        "type": "select",
+        "options": ["60", "300", "900", "1800"]
+      },
+      {
+        "key": "language",
+        "type": "select",
+        "options": ["auto", "en", "fr", "de", "es"]
+      }
+    ],
+    "scene_triggers": [
+      {
+        "key": "public_ip_changed",
+        "fields": [
+          {
+            "key": "family",
+            "options": ["ipv4", "ipv6"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "family",
+            "type": "string"
+          },
+          {
+            "key": "previous_ip",
+            "type": "string"
+          },
+          {
+            "key": "ip",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "record_updated",
+        "fields": [
+          {
+            "key": "host",
+            "options": []
+          },
+          {
+            "key": "family",
+            "options": ["ipv4", "ipv6"]
+          }
+        ],
+        "variables": [
+          {
+            "key": "hostname",
+            "type": "string"
+          },
+          {
+            "key": "family",
+            "type": "string"
+          },
+          {
+            "key": "ip",
+            "type": "string"
+          },
+          {
+            "key": "previous_ip",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "update_failed",
+        "fields": [
+          {
+            "key": "host",
+            "options": []
+          },
+          {
+            "key": "error",
+            "options": [
+              "auth",
+              "nohost",
+              "notfqdn",
+              "abuse",
+              "badagent",
+              "server",
+              "network",
+              "no_ip"
+            ]
+          }
+        ],
+        "variables": [
+          {
+            "key": "hostname",
+            "type": "string"
+          },
+          {
+            "key": "family",
+            "type": "string"
+          },
+          {
+            "key": "ip",
+            "type": "string"
+          },
+          {
+            "key": "error",
+            "type": "string"
+          },
+          {
+            "key": "message",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "scene_actions": [
+      {
+        "key": "update_now",
+        "fields": [
+          {
+            "key": "host",
+            "options": []
+          },
+          {
+            "key": "force",
+            "options": []
+          }
+        ],
+        "outputs": [
+          {
+            "key": "updated",
+            "type": "number"
+          },
+          {
+            "key": "unchanged",
+            "type": "number"
+          },
+          {
+            "key": "failed",
+            "type": "number"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      },
+      {
+        "key": "get_public_ip",
+        "fields": [],
+        "outputs": [
+          {
+            "key": "ipv4",
+            "type": "string"
+          },
+          {
+            "key": "ipv6",
+            "type": "string"
+          },
+          {
+            "key": "summary",
+            "type": "string"
+          }
+        ]
+      }
+    ],
+    "widgets": [
+      {
+        "key": "status",
+        "settings": []
+      }
+    ]
+  }
+}
